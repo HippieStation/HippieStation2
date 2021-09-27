@@ -42,8 +42,8 @@
 		. += "It is empty."
 	. += span_notice("It is held together by some <b>screws</b>.")
 
-/obj/structure/tank_holder/attackby(obj/item/W, mob/living/user, params)
-	if(user.combat_mode)
+/obj/structure/tank_holder/attackby(obj/item/W, mob/user, params)
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(W.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))

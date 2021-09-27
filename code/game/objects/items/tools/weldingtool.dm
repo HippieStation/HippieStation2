@@ -113,13 +113,13 @@
 	dyn_explosion(src, plasmaAmount/5, explosion_cause = src)//20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
 
-/obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/living/user)
+/obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/user)
 	if(!istype(H))
 		return ..()
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && affecting.status == BODYPART_ROBOTIC && !user.combat_mode)
+	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
 		if(src.use_tool(H, user, 0, volume=50, amount=1))
 			if(user == H)
 				user.visible_message(span_notice("[user] starts to fix some of the dents on [H]'s [affecting.name]."),

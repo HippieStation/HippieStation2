@@ -125,7 +125,7 @@
 	playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
 
 
-/obj/item/razor/attack(mob/M, mob/living/user)
+/obj/item/razor/attack(mob/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/location = user.zone_selected
@@ -133,7 +133,7 @@
 			to_chat(user, span_warning("[H] doesn't have a head!"))
 			return
 		if(location == BODY_ZONE_PRECISE_MOUTH)
-			if(!user.combat_mode)
+			if(user.a_intent == INTENT_HELP)
 				if(H.gender == MALE)
 					if (H == user)
 						to_chat(user, span_warning("You need a mirror to properly style your own facial hair!"))
@@ -180,7 +180,7 @@
 						shave(H, location)
 
 		else if(location == BODY_ZONE_HEAD)
-			if(!user.combat_mode)
+			if(user.a_intent == INTENT_HELP)
 				if (H == user)
 					to_chat(user, span_warning("You need a mirror to properly style your own hair!"))
 					return

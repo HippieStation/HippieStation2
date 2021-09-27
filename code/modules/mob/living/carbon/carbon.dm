@@ -62,15 +62,14 @@
 	else
 		mode() // Activate held item
 
-/mob/living/carbon/attackby(obj/item/I, mob/living/user, params)
+/mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	for(var/datum/surgery/S in surgeries)
 		if(body_position == LYING_DOWN || !S.lying_required)
-			var/list/modifiers = params2list(params)
-			if((S.self_operable || user != src) && !user.combat_mode)
-				if(S.next_step(user, modifiers))
+			if((S.self_operable || user != src) && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
+				if(S.next_step(user,user.a_intent))
 					return 1
 
-	if(!all_wounds || !(!user.combat_mode || user == src))
+	if(!all_wounds || !(user.a_intent == INTENT_HELP || user == src))
 		return ..()
 
 	for(var/i in shuffle(all_wounds))
@@ -396,7 +395,7 @@
 	. = ..()
 	. += add_abilities_to_panel()
 
-/mob/living/carbon/attack_ui(slot, params)
+/mob/living/carbon/attack_ui(slot)
 	if(!has_hand_for_held_index(active_hand_index))
 		return 0
 	return ..()

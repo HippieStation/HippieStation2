@@ -64,7 +64,7 @@
 		stored_extinguisher = null
 		update_appearance()
 
-/obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
 		to_chat(user, span_notice("You start unsecuring [name]..."))
 		I.play_tool_sound(src)
@@ -86,7 +86,7 @@
 			return TRUE
 		else
 			toggle_cabinet(user)
-	else if(!user.combat_mode)
+	else if(user.a_intent != INTENT_HARM)
 		toggle_cabinet(user)
 	else
 		return ..()

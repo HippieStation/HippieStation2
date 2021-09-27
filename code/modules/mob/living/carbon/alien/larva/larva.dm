@@ -57,7 +57,7 @@
 	..(amount)
 
 //can't equip anything
-/mob/living/carbon/alien/larva/attack_ui(slot_id, params)
+/mob/living/carbon/alien/larva/attack_ui(slot_id)
 	return
 
 

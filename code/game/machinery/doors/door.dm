@@ -244,8 +244,8 @@
 /obj/machinery/door/proc/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
 	return
 
-/obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
-	if(!user.combat_mode && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
+/obj/machinery/door/attackby(obj/item/I, mob/user, params)
+	if(user.a_intent != INTENT_HARM && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/fireaxe)))
 		var/forced_open = FALSE
 		if(istype(I, /obj/item/crowbar))
 			var/obj/item/crowbar/C = I
@@ -255,7 +255,7 @@
 	else if(I.tool_behaviour == TOOL_WELDER)
 		try_to_weld(I, user, params)
 		return TRUE
-	else if(!(I.item_flags & NOBLUDGEON) && !user.combat_mode)
+	else if(!(I.item_flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
 		try_to_activate_door(user)
 		return TRUE
 	return ..()

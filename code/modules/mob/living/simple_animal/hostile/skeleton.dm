@@ -10,7 +10,7 @@
 	turns_per_move = 5
 	speak_emote = list("rattles")
 	emote_see = list("rattles")
-	combat_mode = TRUE
+	a_intent = INTENT_HARM
 	maxHealth = 40
 	health = 40
 	speed = 1

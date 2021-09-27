@@ -101,8 +101,8 @@
 		myseed = null
 	return ..()
 
-/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, params)
-	if (!user.combat_mode)
+/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/user, params)
+	if (user.a_intent != INTENT_HARM)
 		// handle opening the panel
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 			return

@@ -214,8 +214,8 @@
 	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
 		. += span_warning("They're dripping with fuel and smells terrible.")
 
-/obj/item/food/deadmouse/attackby(obj/item/I, mob/living/user, params)
-	if(I.get_sharpness() && user.combat_mode)
+/obj/item/food/deadmouse/attackby(obj/item/I, mob/user, params)
+	if(I.get_sharpness() && user.a_intent == INTENT_HARM)
 		if(isturf(loc))
 			new /obj/item/food/meat/slab/mouse(loc)
 			to_chat(user, span_notice("You butcher [src]."))

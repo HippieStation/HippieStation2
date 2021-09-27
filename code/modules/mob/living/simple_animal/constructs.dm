@@ -15,7 +15,7 @@
 	speak_chance = 1
 	icon = 'icons/mob/cult.dmi'
 	speed = 0
-	combat_mode = TRUE
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'

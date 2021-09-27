@@ -170,7 +170,7 @@
 /obj/machinery/defibrillator_mount/wrench_act_secondary(mob/living/user, obj/item/tool)
 	if(!wallframe_type)
 		return ..()
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(defib)
 		to_chat(user, span_warning("The mount can't be deconstructed while a defibrillator unit is loaded!"))

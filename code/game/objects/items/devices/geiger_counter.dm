@@ -128,9 +128,9 @@
 	update_appearance()
 	to_chat(user, span_notice("[icon2html(src, user)] You switch [scanning ? "on" : "off"] [src]."))
 
-/obj/item/geiger_counter/afterattack(atom/target, mob/living/user, params)
+/obj/item/geiger_counter/afterattack(atom/target, mob/user)
 	. = ..()
-	if(!user.combat_mode)
+	if(user.a_intent == INTENT_HELP)
 		if(!(obj_flags & EMAGGED))
 			user.visible_message(span_notice("[user] scans [target] with [src]."), span_notice("You scan [target]'s radiation levels with [src]..."))
 			addtimer(CALLBACK(src, .proc/scan, target, user), 20, TIMER_UNIQUE) // Let's not have spamming GetAllContents

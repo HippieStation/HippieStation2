@@ -70,7 +70,7 @@
 				step_towards(H,pull)
 				step_towards(H,pull)
 
-/obj/item/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/living/user, proximity)
+/obj/item/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return

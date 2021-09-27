@@ -116,7 +116,7 @@
 	melee_damage_upper = 15
 	attack_verb_continuous = "impales"
 	attack_verb_simple = "impale"
-	combat_mode = TRUE
+	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = null // doesn't bite unlike the parent type.

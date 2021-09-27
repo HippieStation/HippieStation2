@@ -24,7 +24,7 @@
 	))
 	route = PATH_RUST
 
-/datum/eldritch_knowledge/rust_fist/on_mansus_grasp(atom/target, mob/living/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/rust_fist/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	var/check = FALSE
 	if(ismob(target))
@@ -33,7 +33,7 @@
 			return FALSE
 		else
 			check = TRUE
-	if(user.combat_mode || check)
+	if(user.a_intent == INTENT_HARM || check)
 		target.rust_heretic_act()
 		return TRUE
 

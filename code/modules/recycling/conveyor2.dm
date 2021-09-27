@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	conveying = FALSE
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		user.visible_message(span_notice("[user] struggles to pry up \the [src] with \the [I]."), \
 		span_notice("You struggle to pry up \the [src] with \the [I]."))
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			update_move_direction()
 			to_chat(user, span_notice("You reverse [src]'s direction."))
 
-	else if(!user.combat_mode)
+	else if(user.a_intent != INTENT_HARM)
 		user.transferItemToLoc(I, drop_location())
 	else
 		return ..()
