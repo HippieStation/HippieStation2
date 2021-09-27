@@ -129,8 +129,8 @@
 #define ATTACK_EFFECT_MECHFIRE "mech_fire"
 #define ATTACK_EFFECT_MECHTOXIN "mech_toxin"
 #define ATTACK_EFFECT_BOOP "boop" //Honk
-
-//intent defines
+//BASED AS HIPPIE
+//intent defines 
 #define INTENT_HELP   "help"
 #define INTENT_GRAB   "grab"
 #define INTENT_DISARM "disarm"
@@ -139,7 +139,7 @@
 //they are here to support hotkeys
 #define INTENT_HOTKEY_LEFT  "left"
 #define INTENT_HOTKEY_RIGHT "right"
-
+//BASED AS HIPPIE
 //the define for visible message range in combat
 #define SAMETILE_MESSAGE_RANGE 1
 #define COMBAT_MESSAGE_RANGE 3
