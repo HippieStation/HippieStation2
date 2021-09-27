@@ -172,6 +172,7 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/proc/on_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
+<<<<<<< HEAD
 	if(prob(MONKEY_RETALIATE_PROB))
 		retaliate(user)
 
@@ -184,11 +185,24 @@ have ways of interacting with a specific mob and control it.
 	SIGNAL_HANDLER
 	if(user.melee_damage_upper > 0 && prob(MONKEY_RETALIATE_PROB))
 		retaliate(user)
+=======
+	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+		retaliate(L)
+	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+		retaliate(L)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 /datum/ai_controller/monkey/proc/on_attack_alien(datum/source, mob/living/user)
 	SIGNAL_HANDLER
+<<<<<<< HEAD
 	if(prob(MONKEY_RETALIATE_PROB))
 		retaliate(user)
+=======
+	if(L.a_intent == INTENT_HARM && prob(MONKEY_RETALIATE_HARM_PROB))
+		retaliate(L)
+	else if(L.a_intent == INTENT_DISARM && prob(MONKEY_RETALIATE_DISARM_PROB))
+		retaliate(L)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 /datum/ai_controller/monkey/proc/on_bullet_act(datum/source, obj/projectile/Proj)
 	SIGNAL_HANDLER

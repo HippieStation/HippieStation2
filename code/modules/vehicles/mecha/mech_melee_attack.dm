@@ -46,8 +46,8 @@
 		return
 	return ..()
 
-/mob/living/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
-	if(user.combat_mode)
+/mob/living/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/user)
+	if(user.a_intent == INTENT_HARM)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, span_warning("You don't want to harm other living beings!"))
 			return
@@ -67,10 +67,17 @@
 			else
 				return
 		updatehealth()
+<<<<<<< HEAD
 		visible_message(span_danger("[mecha_attacker.name] hits [src]!"), \
 						span_userdanger("[mecha_attacker.name] hits you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, mecha_attacker)
 		to_chat(mecha_attacker, span_danger("You hit [src]!"))
 		log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
+=======
+		visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
+						"<span class='userdanger'>[mecha_attacker.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, mecha_attacker)
+		to_chat(mecha_attacker, "<span class='danger'>You hit [src]!</span>")
+		log_combat(user, src, "attacked", mecha_attacker, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	else
 		step_away(src, mecha_attacker)
 		log_combat(user, src, "pushed", mecha_attacker)
@@ -78,11 +85,8 @@
 						span_warning("[mecha_attacker] pushes you out of the way."), span_hear("You hear aggressive shuffling!"), 5, list(mecha_attacker))
 		to_chat(mecha_attacker, span_danger("You push [src] out of the way."))
 
-/mob/living/carbon/human/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
-	if(!isliving(user))
-		return ..()
-	var/mob/living/attacker = user
-	if(attacker.combat_mode)
+/mob/living/carbon/human/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/user)
+	if(user.a_intent == INTENT_HARM)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM))
 			to_chat(user, span_warning("You don't want to harm other living beings!"))
 			return
@@ -112,9 +116,16 @@
 				update_damage_overlays()
 			updatehealth()
 
+<<<<<<< HEAD
 		visible_message(span_danger("[mecha_attacker.name] hits [src]!"), \
 						span_userdanger("[mecha_attacker.name] hits you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, list(mecha_attacker))
 		to_chat(mecha_attacker, span_danger("You hit [src]!"))
 		log_combat(user, src, "attacked", mecha_attacker, "(COMBAT MODE: [uppertext(user.combat_mode)] (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
+=======
+		visible_message("<span class='danger'>[mecha_attacker.name] hits [src]!</span>", \
+						"<span class='userdanger'>[mecha_attacker.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, list(mecha_attacker))
+		to_chat(mecha_attacker, "<span class='danger'>You hit [src]!</span>")
+		log_combat(user, src, "attacked", mecha_attacker, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(mecha_attacker.damtype)])")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	else
 		return ..()

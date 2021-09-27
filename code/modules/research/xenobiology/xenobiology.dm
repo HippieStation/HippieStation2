@@ -134,9 +134,15 @@
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user] starts shaking violently!"),span_warning("Your [name] starts pulsing violently..."))
 			if(do_after(user, 50, target = user))
+<<<<<<< HEAD
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
 				if(!user.combat_mode)
 					spawned_mob.faction |= "neutral"
+=======
+				var/mob/living/simple_animal/S = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
+				if(user.a_intent != INTENT_HARM)
+					S.faction |= "neutral"
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 				else
 					spawned_mob.faction |= "slime"
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)

@@ -38,11 +38,16 @@
 		QDEL_NULL(fireaxe)
 	return ..()
 
-/obj/structure/fireaxecabinet/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
 	if(iscyborg(user) || I.tool_behaviour == TOOL_MULTITOOL)
 		toggle_lock(user)
+<<<<<<< HEAD
 	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(atom_integrity < max_integrity)
+=======
+	else if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP && !broken)
+		if(obj_integrity < max_integrity)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 			if(!I.tool_start_check(user, amount=2))
 				return
 

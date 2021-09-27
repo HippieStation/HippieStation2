@@ -290,7 +290,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(panel_open)
 		. += "wm_panel"
 
-/obj/machinery/washing_machine/attackby(obj/item/W, mob/living/user, params)
+/obj/machinery/washing_machine/attackby(obj/item/W, mob/user, params)
 	if(panel_open && !busy && default_unfasten_wrench(user, W))
 		return
 
@@ -298,7 +298,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		update_appearance()
 		return
 
-	else if(!user.combat_mode)
+	else if(user.a_intent != INTENT_HARM)
 		if (!state_open)
 			to_chat(user, span_warning("Open the door first!"))
 			return TRUE
@@ -321,7 +321,11 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	else
 		return ..()
 
+<<<<<<< HEAD
 /obj/machinery/washing_machine/attack_hand(mob/living/user, list/modifiers)
+=======
+/obj/machinery/washing_machine/attack_hand(mob/user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	. = ..()
 	if(.)
 		return
@@ -329,7 +333,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		to_chat(user, span_warning("[src] is busy!"))
 		return
 
-	if(user.pulling && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(L.buckled || L.has_buckled_mobs())
 			return

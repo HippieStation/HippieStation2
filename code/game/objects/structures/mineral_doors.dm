@@ -128,10 +128,10 @@
 	icon_state = "[initial(icon_state)][door_opened ? "open":""]"
 	return ..()
 
-/obj/structure/mineral_door/attackby(obj/item/I, mob/living/user)
+/obj/structure/mineral_door/attackby(obj/item/I, mob/user)
 	if(pickaxe_door(user, I))
 		return
-	else if(!user.combat_mode)
+	else if(user.a_intent != INTENT_HARM)
 		return attack_hand(user)
 	else
 		return ..()
@@ -342,8 +342,13 @@
 		fire_act(I.get_temperature())
 		return
 
+<<<<<<< HEAD
 	if((!user.combat_mode) && istype(I, /obj/item/paper) && (atom_integrity < max_integrity))
 		user.visible_message(span_notice("[user] starts to patch the holes in [src]."), span_notice("You start patching some of the holes in [src]!"))
+=======
+	if((user.a_intent != INTENT_HARM) && istype(I, /obj/item/paper) && (obj_integrity < max_integrity))
+		user.visible_message("<span class='notice'>[user] starts to patch the holes in [src].</span>", "<span class='notice'>You start patching some of the holes in [src]!</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		if(do_after(user, 2 SECONDS, src))
 			atom_integrity = min(atom_integrity+4,max_integrity)
 			qdel(I)

@@ -91,7 +91,11 @@
 	if(a_right)
 		a_right.dropped()
 
+<<<<<<< HEAD
 /obj/item/assembly_holder/attack_hand(mob/living/user, list/modifiers)//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
+=======
+/obj/item/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	. = ..()
 	if(.)
 		return

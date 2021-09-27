@@ -111,7 +111,11 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/attack_ai(mob/user)
 	return
 
+<<<<<<< HEAD
 /obj/machinery/deepfryer/attack_hand(mob/living/user, list/modifiers)
+=======
+/obj/machinery/deepfryer/attack_hand(mob/user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	if(frying)
 		if(frying.loc == src)
 			to_chat(user, span_notice("You eject [frying] from [src]."))
@@ -126,7 +130,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			frying_burnt = FALSE
 			fry_loop.stop()
 			return
-	else if(user.pulling && iscarbon(user.pulling) && reagents.total_volume)
+	else if(user.pulling && user.a_intent == "grab" && iscarbon(user.pulling) && reagents.total_volume)
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, span_warning("You need a better grip to do that!"))
 			return

@@ -192,7 +192,11 @@
 /obj/machinery/firealarm/attack_robot(mob/user)
 	return attack_hand(user)
 
+<<<<<<< HEAD
 /obj/machinery/firealarm/attackby(obj/item/tool, mob/living/user, params)
+=======
+/obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	add_fingerprint(user)
 
 	if(tool.tool_behaviour == TOOL_SCREWDRIVER && buildstage == 2)
@@ -204,9 +208,15 @@
 
 	if(panel_open)
 
+<<<<<<< HEAD
 		if(tool.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 			if(atom_integrity < max_integrity)
 				if(!tool.tool_start_check(user, amount=0))
+=======
+		if(W.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
+			if(obj_integrity < max_integrity)
+				if(!W.tool_start_check(user, amount=0))
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 					return
 
 				to_chat(user, span_notice("You begin repairing [src]..."))

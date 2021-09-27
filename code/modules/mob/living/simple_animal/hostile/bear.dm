@@ -158,9 +158,15 @@
 
 /mob/living/simple_animal/hostile/bear/butter/attack_hand(mob/living/user, list/modifiers) //Borrowed code from Cak, feeds people if they hit you. More nutriment but less vitamin to represent BUTTER.
 	..()
+<<<<<<< HEAD
 	if(user.combat_mode && user.reagents && !stat)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.1)
+=======
+	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
+		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 1)
+		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.1)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 /mob/living/simple_animal/hostile/bear/butter/CheckParts(list/parts) //Borrowed code from Cak, allows the brain used to actually control the bear.
 	..()

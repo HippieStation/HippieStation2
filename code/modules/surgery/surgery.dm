@@ -88,14 +88,18 @@
 	if(type in opcomputer.advanced_surgeries)
 		return TRUE
 
-/datum/surgery/proc/next_step(mob/living/user, modifiers)
+/datum/surgery/proc/next_step(mob/user, intent)
 	if(location != user.zone_selected)
 		return FALSE
 	if(step_in_progress)
 		return TRUE
 
 	var/try_to_fail = FALSE
+<<<<<<< HEAD
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+=======
+	if(intent == INTENT_DISARM)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		try_to_fail = TRUE
 
 	var/datum/surgery_step/step = get_surgery_step()

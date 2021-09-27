@@ -316,6 +316,12 @@
 
 /mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/user, list/modifiers)
 	..()
+<<<<<<< HEAD
 	if(user.combat_mode && user.reagents && !stat)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
+=======
+	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
+		L.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
+		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))

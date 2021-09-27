@@ -29,8 +29,13 @@
 /obj/machinery/porta_turret_cover/attack_robot(mob/user)
 	return ..() || parent_turret.attack_robot(user)
 
+<<<<<<< HEAD
 /obj/machinery/porta_turret_cover/attack_hand(mob/user, list/modifiers)
 	return ..() || parent_turret.attack_hand(user, modifiers)
+=======
+/obj/machinery/porta_turret_cover/attack_hand(mob/user)
+	return ..() || parent_turret.attack_hand(user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 /obj/machinery/porta_turret_cover/attack_ghost(mob/user)
 	return ..() || parent_turret.attack_ghost(user)

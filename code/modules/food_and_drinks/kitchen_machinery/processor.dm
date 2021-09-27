@@ -68,7 +68,18 @@
 		qdel(what)
 	LAZYREMOVE(processor_contents, what)
 
+<<<<<<< HEAD
 /obj/machinery/processor/attackby(obj/item/O, mob/living/user, params)
+=======
+/obj/machinery/processor/proc/select_recipe(X)
+	for (var/type in subtypesof(/datum/food_processor_process) - /datum/food_processor_process/mob)
+		var/datum/food_processor_process/recipe = new type()
+		if (!istype(X, recipe.input) || !istype(src, recipe.required_machine))
+			continue
+		return recipe
+
+/obj/machinery/processor/attackby(obj/item/O, mob/user, params)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	if(processing)
 		to_chat(user, span_warning("[src] is in the process of processing!"))
 		return TRUE
@@ -107,17 +118,28 @@
 		user.transferItemToLoc(O, src, TRUE)
 		LAZYADD(processor_contents, O)
 		return 1
+<<<<<<< HEAD
 	else if(!user.combat_mode)
 		to_chat(user, span_warning("That probably won't blend!"))
 		return 1
+=======
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	else
-		return ..()
+		if(user.a_intent != INTENT_HARM)
+			to_chat(user, "<span class='warning'>That probably won't blend!</span>")
+			return 1
+		else
+			return ..()
 
 /obj/machinery/processor/interact(mob/user)
 	if(processing)
 		to_chat(user, span_warning("[src] is in the process of processing!"))
 		return TRUE
+<<<<<<< HEAD
 	if(ismob(user.pulling) && PROCESSOR_SELECT_RECIPE(user.pulling))
+=======
+	if(user.a_intent == INTENT_GRAB && ismob(user.pulling) && select_recipe(user.pulling))
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, span_warning("You need a better grip to do that!"))
 			return

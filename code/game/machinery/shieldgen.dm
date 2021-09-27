@@ -76,8 +76,13 @@
 	///The rune that created the shield itself. Used to delete the rune when the shield is destroyed.
 	var/obj/effect/rune/parent_rune
 
+<<<<<<< HEAD
 /obj/structure/emergency_shield/cult/barrier/attack_hand(mob/living/user, list/modifiers)
 	parent_rune.attack_hand(user, modifiers)
+=======
+/obj/structure/emergency_shield/cult/barrier/attack_hand(mob/living/user)
+	parent_rune.attack_hand(user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 /obj/structure/emergency_shield/cult/barrier/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(IS_CULTIST(user))

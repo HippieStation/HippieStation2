@@ -29,7 +29,7 @@
 		log_combat(user, swirlie, "swirlied (brute)")
 		swirlie.adjustBruteLoss(5)
 
-	else if(user.pulling && isliving(user.pulling))
+	else if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -107,6 +107,7 @@
 	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		I.play_tool_sound(src)
 		deconstruct()
+<<<<<<< HEAD
 		return TRUE
 	else if(cistern && !user.combat_mode)
 		if(I.w_class > WEIGHT_CLASS_NORMAL)
@@ -120,8 +121,23 @@
 			return
 		w_items += I.w_class
 		to_chat(user, span_notice("You carefully place [I] into the cistern."))
+=======
+	else if(cistern)
+		if(user.a_intent != INTENT_HARM)
+			if(I.w_class > WEIGHT_CLASS_NORMAL)
+				to_chat(user, "<span class='warning'>[I] does not fit!</span>")
+				return
+			if(w_items + I.w_class > WEIGHT_CLASS_HUGE)
+				to_chat(user, "<span class='warning'>The cistern is full!</span>")
+				return
+			if(!user.transferItemToLoc(I, src))
+				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>")
+				return
+			w_items += I.w_class
+			to_chat(user, "<span class='notice'>You carefully place [I] into the cistern.</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
-	else if(istype(I, /obj/item/reagent_containers) && !user.combat_mode)
+	else if(istype(I, /obj/item/reagent_containers))
 		if (!open)
 			return
 		if(istype(I, /obj/item/food/monkeycube))
@@ -179,11 +195,15 @@
 	. = ..()
 	hiddenitem = new /obj/item/food/urinalcake
 
+<<<<<<< HEAD
 /obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
+=======
+/obj/structure/urinal/attack_hand(mob/user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	. = ..()
 	if(.)
 		return
-	if(user.pulling && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
@@ -413,8 +433,13 @@
 	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
+<<<<<<< HEAD
 	if(!user.combat_mode)
 		to_chat(user, span_notice("You start washing [O]..."))
+=======
+	if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='notice'>You start washing [O]...</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		busy = TRUE
 		if(!do_after(user, 40, target = src))
 			busy = FALSE
@@ -612,8 +637,13 @@
 	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
+<<<<<<< HEAD
 	if(!user.combat_mode)
 		to_chat(user, span_notice("You start washing [O]..."))
+=======
+	if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='notice'>You start washing [O]...</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))
 			busy = FALSE

@@ -190,7 +190,7 @@
 	SSblackbox.record_feedback("tally", "zone_targeted", 1, target_area)
 
 	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I, user, affecting, src)
+	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src)
 
 
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user)
@@ -206,24 +206,40 @@
 	to_chat(user, span_danger("You [hulk_verb] [src]!"))
 	apply_damage(15, BRUTE, wound_bonus=10)
 
+<<<<<<< HEAD
 /mob/living/carbon/human/attack_hand(mob/user, list/modifiers)
 	if(..()) //to allow surgery to return properly.
+=======
+/mob/living/carbon/human/attack_hand(mob/user)
+	if(..())	//to allow surgery to return properly.
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		dna.species.spec_attack_hand(H, src, null, modifiers)
+		dna.species.spec_attack_hand(H, src)
 
+<<<<<<< HEAD
 /mob/living/carbon/human/attack_paw(mob/living/carbon/human/user, list/modifiers)
+=======
+/mob/living/carbon/human/attack_paw(mob/living/carbon/human/M)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
+	if(M.a_intent == INTENT_HELP)
+		..() //shaking
+		return FALSE
 
+<<<<<<< HEAD
 	var/martial_result = user.apply_martial_art(src, modifiers)
 	if (martial_result != MARTIAL_ATTACK_INVALID)
 		return martial_result
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stunned instead.
+=======
+	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		var/obj/item/I = get_active_held_item()
 		if(I && !(I.item_flags & ABSTRACT) && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
@@ -246,12 +262,17 @@
 				to_chat(user, span_danger("You tackle [src] down!"))
 		return TRUE
 
+<<<<<<< HEAD
 	if(!user.combat_mode)
 		..() //shaking
 		return FALSE
 
 	if(user.limb_destroyer)
 		dismembering_strike(user, affecting.body_zone)
+=======
+	if(M.limb_destroyer)
+		dismembering_strike(M, affecting.body_zone)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 	if(try_inject(user, affecting, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
@@ -264,15 +285,24 @@
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return TRUE
 
+<<<<<<< HEAD
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(check_shields(user, 0, "the [user.name]"))
 		visible_message(span_danger("[user] attempts to touch [src]!"), \
 						span_danger("[user] attempts to touch you!"), span_hear("You hear a swoosh!"), null, user)
 		to_chat(user, span_warning("You attempt to touch [src]!"))
+=======
+/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(check_shields(M, 0, "the M.name"))
+		visible_message("<span class='danger'>[M] attempts to touch [src]!</span>", \
+						"<span class='danger'>[M] attempts to touch you!</span>", "<span class='hear'>You hear a swoosh!</span>", null, M)
+		to_chat(M, "<span class='warning'>You attempt to touch [src]!</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return FALSE
 	. = ..()
 	if(!.)
 		return
+<<<<<<< HEAD
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand, if no item, get stun instead.
 		var/obj/item/I = get_active_held_item()
@@ -291,6 +321,9 @@
 		return TRUE
 
 	if(user.combat_mode)
+=======
+	if(M.a_intent == INTENT_HARM)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		if (w_uniform)
 			w_uniform.add_fingerprint(user)
 		var/damage = prob(90) ? rand(user.melee_damage_lower, user.melee_damage_upper) : 0
@@ -314,7 +347,20 @@
 			return TRUE
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
-
+	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
+		var/obj/item/I = get_active_held_item()
+		if(I && dropItemToGround(I))
+			playsound(loc, 'sound/weapons/slash.ogg', 25, TRUE, -1)
+			visible_message("<span class='danger'>[M] disarms [src]!</span>", \
+							"<span class='userdanger'>[M] disarms you!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, M)
+			to_chat(M, "<span class='danger'>You disarm [src]!</span>")
+		else
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
+			Paralyze(100)
+			log_combat(M, src, "tackled")
+			visible_message("<span class='danger'>[M] tackles [src] down!</span>", \
+							"<span class='userdanger'>[M] tackles you down!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", null, M)
+			to_chat(M, "<span class='danger'>You tackle [src] down!</span>")
 
 
 /mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L)

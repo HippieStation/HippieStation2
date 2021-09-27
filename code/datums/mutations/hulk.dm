@@ -32,7 +32,11 @@
 
 	if(!proximity)
 		return
+<<<<<<< HEAD
 	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
+=======
+	if(source.a_intent != INTENT_HARM)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return
 	if(target.attack_hulk(owner))
 		if(world.time > (last_scream + scream_delay))

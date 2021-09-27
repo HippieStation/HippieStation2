@@ -271,11 +271,51 @@
 	firstname.Find(real_name)
 	return firstname.match
 
+<<<<<<< HEAD
 /// Find the last name of a mob from the real name with regex
 /mob/proc/last_name()
 	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	lasttname.Find(real_name)
 	return lasttname.match
+=======
+
+/**
+ * change a mob's act-intent.
+ *
+ * Input the intent as a string such as "help" or use "right"/"left
+ */
+/mob/verb/a_intent_change(input as text)
+	set name = "a-intent"
+	set hidden = TRUE
+
+	if(!possible_a_intents || !possible_a_intents.len)
+		return
+
+	if(input in possible_a_intents)
+		a_intent = input
+	else
+		var/current_intent = possible_a_intents.Find(a_intent)
+
+		if(!current_intent)
+			// Failsafe. Just in case some badmin was playing with VV.
+			current_intent = 1
+
+		if(input == INTENT_HOTKEY_RIGHT)
+			current_intent += 1
+		if(input == INTENT_HOTKEY_LEFT)
+			current_intent -= 1
+
+		// Handle looping
+		if(current_intent < 1)
+			current_intent = possible_a_intents.len
+		if(current_intent > possible_a_intents.len)
+			current_intent = 1
+
+		a_intent = possible_a_intents[current_intent]
+
+	if(hud_used?.action_intent)
+		hud_used.action_intent.icon_state = "[a_intent]"
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 ///Returns a mob's real name between brackets. Useful when you want to display a mob's name alongside their real name
 /mob/proc/get_realname_string()
@@ -482,7 +522,7 @@
 			colored_message = "(ASAY) [colored_message]"
 		if(LOG_EMOTE)
 			colored_message = "(EMOTE) [colored_message]"
-
+	
 	var/list/timestamped_message = list("\[[time_stamp()]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
 	logging[smessage_type] += timestamped_message

@@ -21,7 +21,7 @@
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	path_image_color = "#FF0000"
 
-	combat_mode = TRUE
+	a_intent = "harm"
 
 	var/baton_type = /obj/item/melee/baton/security
 	var/obj/item/weapon
@@ -202,10 +202,17 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.
 	return
 
+<<<<<<< HEAD
 /mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(user.combat_mode)
 		retaliate(user)
 		if(special_retaliate_after_attack(user))
+=======
+/mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/H)
+	if((H.a_intent == INTENT_HARM) || (H.a_intent == INTENT_DISARM))
+		retaliate(H)
+		if(special_retaliate_after_attack(H))
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 			return
 
 		// Turns an oversight into a feature. Beepsky will now announce when pacifists taunt him over sec comms.
@@ -219,11 +226,15 @@ Auto Patrol: []"},
 
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/attackby(obj/item/W, mob/living/user, params)
+/mob/living/simple_animal/bot/secbot/attackby(obj/item/W, mob/user, params)
 	..()
+<<<<<<< HEAD
 	if(!on) // Bots won't remember if you hit them while they're off.
 		return
 	if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode) // Any intent but harm will heal, so we shouldn't get angry.
+=======
+	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return
 	if(W.tool_behaviour != TOOL_SCREWDRIVER && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		retaliate(user)

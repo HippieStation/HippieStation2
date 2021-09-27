@@ -4,8 +4,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	/obj/item/clothing/head/chameleon/broken \
 	)))
 
-/mob/living/silicon/robot/attackby(obj/item/W, mob/living/user, params)
-	if(W.tool_behaviour == TOOL_WELDER && (!user.combat_mode || user == src))
+/mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_WELDER && (user.a_intent != INTENT_HARM || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
 		if (!getBruteLoss())
 			to_chat(user, span_warning("[src] is already in good condition!"))
@@ -99,10 +99,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			deconstruct()
 		return
 
+<<<<<<< HEAD
 	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && !user.combat_mode && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
 		if(user == src)
 			to_chat(user,  span_notice("You can't seem to manage to place [W] on your head by yourself!") )
 			return
+=======
+	if(W.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && user.a_intent == INTENT_HELP && !is_type_in_typecache(W, GLOB.blacklisted_borg_hats))
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		if(hat && HAS_TRAIT(hat, TRAIT_NODROP))
 			to_chat(user, span_warning("You can't seem to remove [src]'s existing headwear!"))
 			return
@@ -112,7 +116,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			if (user.temporarilyRemoveItemFromInventory(W, TRUE))
 				place_on_head(W)
 		return
-	if(istype(W, /obj/item/defibrillator) && !user.combat_mode)
+	if(istype(W, /obj/item/defibrillator) && user.a_intent == "help")
 		if(!opened)
 			to_chat(user, span_warning("You must access the cyborg's internals!"))
 			return
@@ -238,8 +242,13 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		spark_system.start()
 	return ..()
 
+<<<<<<< HEAD
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if (LAZYACCESS(modifiers, RIGHT_CLICK))
+=======
+/mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if (M.a_intent == INTENT_DISARM)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		if(body_position == STANDING_UP)
 			user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 			var/obj/item/I = get_active_held_item()

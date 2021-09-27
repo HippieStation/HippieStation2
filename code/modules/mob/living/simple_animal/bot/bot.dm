@@ -292,9 +292,15 @@
 	return TRUE //Successful completion. Used to prevent child process() continuing if this one is ended early.
 
 
+<<<<<<< HEAD
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!user.combat_mode)
 		interact(user)
+=======
+/mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
+	if(H.a_intent == INTENT_HELP)
+		interact(H)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	else
 		return ..()
 
@@ -329,7 +335,7 @@
 	to_chat(user, span_notice("Controls are now [locked ? "locked" : "unlocked"]."))
 	return TRUE
 
-/mob/living/simple_animal/bot/attackby(obj/item/W, mob/living/user, params)
+/mob/living/simple_animal/bot/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!locked)
 			open = !open
@@ -351,7 +357,7 @@
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode)
+		if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 			if(health >= maxHealth)
 				to_chat(user, span_warning("[src] does not need a repair!"))
 				return

@@ -26,7 +26,12 @@
 	response_harm_simple = "squish"
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
+<<<<<<< HEAD
 	combat_mode = FALSE
+=======
+	a_intent = INTENT_HELP
+	ventcrawler = VENTCRAWLER_ALWAYS
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	gold_core_spawnable = FRIENDLY_SPAWN
 	stat_attack = HARD_CRIT
 	gender = NEUTER

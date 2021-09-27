@@ -15,7 +15,11 @@
 
 	Otherwise pretty standard.
 */
+<<<<<<< HEAD
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+=======
+/mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		if(src == A)
 			check_self_for_injuries()
@@ -36,6 +40,7 @@
 	if(proximity_flag && istype(G) && G.Touch(A,1,modifiers))
 		return
 	//This signal is needed to prevent gloves of the north star + hulk.
+<<<<<<< HEAD
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity_flag, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity_flag, modifiers)
@@ -47,6 +52,18 @@
 
 /// Return TRUE to cancel other attack hand effects that respect it. Modifiers is the assoc list for click info such as if it was a right click.
 /atom/proc/attack_hand(mob/user, list/modifiers)
+=======
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return
+	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity)
+
+	if(dna?.species?.spec_unarmedattack(src, A)) //Because species like monkeys dont use attack hand
+		return
+	A.attack_hand(src)
+
+/// Return TRUE to cancel other attack hand effects that respect it.
+/atom/proc/attack_hand(mob/user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	. = FALSE
 	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
 		add_fingerprint(user)
@@ -119,6 +136,7 @@
 /*
 	Animals & All Unspecified
 */
+<<<<<<< HEAD
 
 // If the UnarmedAttack chain is blocked
 #define LIVING_UNARMED_ATTACK_BLOCKED(target_atom) (HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) \
@@ -130,13 +148,25 @@
 	attack_target.attack_animal(src, modifiers)
 
 /atom/proc/attack_animal(mob/user, list/modifiers)
+=======
+/mob/living/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
+	A.attack_animal(src)
+
+/atom/proc/attack_animal(mob/user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, user)
 
 /atom/proc/attack_basic_mob(mob/user, list/modifiers)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_BASIC_MOB, user)
 
 ///Attacked by monkey
+<<<<<<< HEAD
 /atom/proc/attack_paw(mob/user, list/modifiers)
+=======
+/atom/proc/attack_paw(mob/user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	return FALSE
@@ -146,6 +176,7 @@
 	Aliens
 	Defaults to same as monkey in most places
 */
+<<<<<<< HEAD
 /mob/living/carbon/alien/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
 		return
@@ -153,6 +184,15 @@
 
 /atom/proc/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	attack_paw(user, modifiers)
+=======
+/mob/living/carbon/alien/UnarmedAttack(atom/A)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
+	A.attack_alien(src)
+
+/atom/proc/attack_alien(mob/living/carbon/alien/user)
+	attack_paw(user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	return
 
 
@@ -215,11 +255,21 @@
 	Simple animals
 */
 
+<<<<<<< HEAD
 /mob/living/simple_animal/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
 		return
 	if(dextrous && (isitem(attack_target) || !combat_mode))
 		attack_target.attack_hand(src, modifiers)
+=======
+/mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+		return
+	if(!dextrous)
+		return ..()
+	if(!ismob(A))
+		A.attack_hand(src)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		update_inv_hands()
 	else
 		return ..()

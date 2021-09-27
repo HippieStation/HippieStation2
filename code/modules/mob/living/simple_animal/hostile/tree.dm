@@ -97,8 +97,13 @@
 
 /mob/living/simple_animal/hostile/tree/festivus/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
+<<<<<<< HEAD
 	if(!user.combat_mode)
 		visible_message(span_warning("[src] crackles with static electricity!"))
+=======
+	if(M.a_intent == "help")
+		visible_message("<span class='warning'>[src] crackles with static electricity!</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		for(var/obj/item/stock_parts/cell/C in range(2, get_turf(src)))
 			C.give(75)
 		for(var/mob/living/silicon/robot/R in range(2, get_turf(src)))

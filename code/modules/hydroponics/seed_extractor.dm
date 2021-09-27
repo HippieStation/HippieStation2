@@ -78,7 +78,7 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Extracting <b>[seed_multiplier] to [seed_multiplier * 4]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]</b> seeds.")
 
-/obj/machinery/seed_extractor/attackby(obj/item/O, mob/living/user, params)
+/obj/machinery/seed_extractor/attackby(obj/item/O, mob/user, params)
 
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
 		return
@@ -114,8 +114,13 @@
 			to_chat(user, span_notice("You add [O] to [src.name]."))
 			updateUsrDialog()
 		return
+<<<<<<< HEAD
 	else if(!user.combat_mode)
 		to_chat(user, span_warning("You can't extract any seeds from \the [O.name]!"))
+=======
+	else if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	else
 		return ..()
 

@@ -98,7 +98,7 @@
 /datum/wound/blunt/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
 	SIGNAL_HANDLER
 
-	if(victim.get_active_hand() != limb || !victim.combat_mode || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
+	if(victim.get_active_hand() != limb || victim.a_intent == INTENT_HELP || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
 		return
 
 	// With a severe or critical wound, you have a 15% or 30% chance to proc pain on hit
@@ -235,7 +235,7 @@
 		remove_wound()
 
 /datum/wound/blunt/moderate/try_handling(mob/living/carbon/human/user)
-	if(user.pulling != victim || user.zone_selected != limb.body_zone)
+	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB)
 		return FALSE
 
 	if(user.grab_state == GRAB_PASSIVE)
@@ -243,9 +243,15 @@
 		return TRUE
 
 	if(user.grab_state >= GRAB_AGGRESSIVE)
+<<<<<<< HEAD
 		user.visible_message(span_danger("[user] begins twisting and straining [victim]'s dislocated [limb.name]!"), span_notice("You begin twisting and straining [victim]'s dislocated [limb.name]..."), ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] begins twisting and straining your dislocated [limb.name]!"))
 		if(!user.combat_mode)
+=======
+		user.visible_message("<span class='danger'>[user] begins twisting and straining [victim]'s dislocated [limb.name]!</span>", "<span class='notice'>You begin twisting and straining [victim]'s dislocated [limb.name]...</span>", ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[user] begins twisting and straining your dislocated [limb.name]!</span>")
+		if(user.a_intent == INTENT_HELP)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 			chiropractice(user)
 		else
 			malpractice(user)

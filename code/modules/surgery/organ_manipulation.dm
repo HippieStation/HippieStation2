@@ -134,9 +134,13 @@
 				return -1
 
 
+<<<<<<< HEAD
 /datum/surgery_step/manipulate_organs/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if (target_zone == BODY_ZONE_PRECISE_EYES)
 		target_zone = check_zone(target_zone)
+=======
+/datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	if(current_type == "insert")
 		if(istype(tool, /obj/item/borg/apparatus/organ_storage))
 			target_organ = tool.contents[1]
@@ -154,6 +158,7 @@
 		display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool] comes to life!")
 
 	else if(current_type == "extract")
+<<<<<<< HEAD
 		if(target_organ && target_organ.owner == target)
 			display_results(user, target, span_notice("You successfully extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
 				span_notice("[user] successfully extracts [target_organ] from [target]'s [parse_zone(target_zone)]!"),
@@ -162,6 +167,15 @@
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			target_organ.Remove(target)
 			target_organ.forceMove(get_turf(target))
+=======
+		if(I && I.owner == target)
+			display_results(user, target, "<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>",
+				"<span class='notice'>[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!</span>",
+				"<span class='notice'>[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!</span>")
+			log_combat(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
+			I.Remove(target)
+			I.forceMove(get_turf(target))
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		else
 			display_results(user, target, span_warning("You can't extract anything from [target]'s [parse_zone(target_zone)]!"),
 				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"),

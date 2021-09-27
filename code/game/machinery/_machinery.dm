@@ -598,8 +598,13 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 /obj/machinery/attack_paw(mob/living/user, list/modifiers)
 	if(!user.combat_mode)
+=======
+/obj/machinery/attack_paw(mob/living/user)
+	if(user.a_intent != INTENT_HARM)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return attack_hand(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)

@@ -361,19 +361,34 @@
 		return FALSE
 	. = ..()
 
-/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/target, mob/living/user, def_zone)
+/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/target, mob/user, def_zone)
 	if(!target)
 		return
 
+<<<<<<< HEAD
 	if(cap_on && reagents.total_volume && istype(target))
 		to_chat(user, span_warning("You must remove the cap before you can do that!"))
 		return
+=======
+	if(user.a_intent != INTENT_HARM)
+		if(cap_on && reagents.total_volume && istype(target))
+			to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+			return
+
+		return ..()
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 	return ..()
 
+<<<<<<< HEAD
 /obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/living/user, proximity)
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))
 		to_chat(user, span_warning("You must remove the cap before you can do that!"))
+=======
+/obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/user, proximity)
+	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
+		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return
 
 	else if(istype(target, /obj/item/reagent_containers/food/drinks/waterbottle))
@@ -663,8 +678,8 @@
 	sleep(20) //dramatic pause
 	return TOXLOSS
 
-/obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/living/user)
-	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
+/obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
+	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == BODY_ZONE_HEAD)
 		if(M == user)
 			user.visible_message(span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"), span_notice("You crush the can of [src] on your forehead."))
 		else

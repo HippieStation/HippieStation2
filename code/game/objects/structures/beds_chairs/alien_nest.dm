@@ -85,8 +85,14 @@
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
+<<<<<<< HEAD
 /obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	if(!user.combat_mode)
 		return attack_hand(user, modifiers)
+=======
+/obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user)
+	if(user.a_intent != INTENT_HARM)
+		return attack_hand(user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	else
 		return ..()

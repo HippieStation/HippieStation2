@@ -75,11 +75,15 @@
 		if(user.transferItemToLoc(W, drop_location()))
 			visible_message(span_warning("[user] dunks [W] into \the [src]!"))
 
+<<<<<<< HEAD
 /obj/structure/holohoop/attack_hand(mob/living/user, list/modifiers)
+=======
+/obj/structure/holohoop/attack_hand(mob/user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	. = ..()
 	if(.)
 		return
-	if(user.pulling && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, span_warning("You need a better grip to do that!"))

@@ -468,8 +468,16 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			new /obj/item/stack/sheet/bluespace_crystal (drop_location(), 1)
 	qdel(src)
 
+<<<<<<< HEAD
 /obj/machinery/portable_atmospherics/canister/welder_act_secondary(mob/living/user, obj/item/I)
 	. = ..()
+=======
+/obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/I)
+	..()
+	if(user.a_intent == INTENT_HARM)
+		return FALSE
+
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 	var/pressure = air_contents.return_pressure()

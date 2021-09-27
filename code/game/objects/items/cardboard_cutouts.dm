@@ -38,8 +38,13 @@
 	))
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
+<<<<<<< HEAD
 /obj/item/cardboard_cutout/attack_hand(mob/living/user, list/modifiers)
 	if(!user.combat_mode || pushed_over)
+=======
+/obj/item/cardboard_cutout/attack_hand(mob/living/user)
+	if(user.a_intent == INTENT_HELP || pushed_over)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return ..()
 	user.visible_message(span_warning("[user] pushes over [src]!"), span_danger("You push over [src]!"))
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)

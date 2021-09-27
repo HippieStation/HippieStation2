@@ -97,6 +97,131 @@
 			H.visible_message(span_warning("[src] takes a big chomp out of [H]!"), \
 								  span_userdanger("[src] takes a big chomp out of your [NB]!"))
 			NB.dismember()
+<<<<<<< HEAD
+=======
+//cow
+/mob/living/simple_animal/cow
+	name = "cow"
+	desc = "Known for their milk, just don't tip them over."
+	icon_state = "cow"
+	icon_living = "cow"
+	icon_dead = "cow_dead"
+	icon_gib = "cow_gib"
+	gender = FEMALE
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	speak = list("moo?","moo","MOOOOOO")
+	speak_emote = list("moos","moos hauntingly")
+	emote_hear = list("brays.")
+	emote_see = list("shakes its head.")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/food/meat/slab = 6)
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
+	attack_verb_continuous = "kicks"
+	attack_verb_simple = "kick"
+	attack_sound = 'sound/weapons/punch1.ogg'
+	health = 50
+	maxHealth = 50
+	var/obj/item/udder/udder = null
+	gold_core_spawnable = FRIENDLY_SPAWN
+	blood_volume = BLOOD_VOLUME_NORMAL
+	food_type = list(/obj/item/food/grown/wheat)
+	tame_chance = 25
+	bonus_tame_chance = 15
+	footstep_type = FOOTSTEP_MOB_SHOE
+	pet_bonus = TRUE
+	pet_bonus_emote = "moos happily!"
+
+/mob/living/simple_animal/cow/Initialize()
+	udder = new()
+	add_cell_sample()
+	. = ..()
+
+/mob/living/simple_animal/cow/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/mob/living/simple_animal/cow/Destroy()
+	qdel(udder)
+	udder = null
+	return ..()
+
+/mob/living/simple_animal/cow/attackby(obj/item/O, mob/user, params)
+	if(stat == CONSCIOUS && istype(O, /obj/item/reagent_containers/glass))
+		udder.milkAnimal(O, user)
+		return 1
+	else
+		return ..()
+
+/mob/living/simple_animal/cow/tamed()
+	. = ..()
+	can_buckle = TRUE
+	buckle_lying = 0
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/cow)
+
+/mob/living/simple_animal/cow/Life()
+	. = ..()
+	if(stat == CONSCIOUS)
+		udder.generateMilk()
+
+/mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M)
+	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
+		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
+			"<span class='notice'>You tip over [src].</span>")
+		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
+		Paralyze(60, ignore_canstun = TRUE)
+		icon_state = icon_dead
+		addtimer(CALLBACK(src, .proc/cow_tipped, M), rand(20,50))
+
+	else
+		..()
+
+/mob/living/simple_animal/cow/proc/cow_tipped(mob/living/carbon/M)
+	if(QDELETED(M) || stat)
+		return
+	icon_state = icon_living
+	var/external
+	var/internal
+	if(prob(75))
+		var/text = pick("imploringly.", "pleadingly.",
+			"with a resigned expression.")
+		external = "[src] looks at [M] [text]"
+		internal = "You look at [M] [text]"
+	else
+		external = "[src] seems resigned to its fate."
+		internal = "You resign yourself to your fate."
+	visible_message("<span class='notice'>[external]</span>",
+		"<span class='revennotice'>[internal]</span>")
+
+///Wisdom cow, gives XP to a random skill and speaks wisdoms
+/mob/living/simple_animal/cow/wisdom
+	name = "wisdom cow"
+	desc = "Known for its wisdom, shares it with all"
+	gold_core_spawnable = FALSE
+	tame_chance = 0
+	bonus_tame_chance = 0
+	speak_chance = 15
+
+/mob/living/simple_animal/cow/wisdom/Initialize()
+	. = ..()
+	speak = GLOB.wisdoms //Done here so it's setup properly
+
+///Give intense wisdom to the attacker if they're being friendly about it
+/mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/M)
+	if(!stat && M.a_intent == INTENT_HELP)
+		to_chat(M, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then disappears!</span>")
+		M.mind?.adjust_experience(pick(GLOB.skill_types), 500)
+		do_smoke(1, get_turf(src))
+		qdel(src)
+		return
+	return ..()
+
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"

@@ -71,11 +71,53 @@
 	var/list/data = list()
 	data["materials"] = list()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+<<<<<<< HEAD
 	data["materialtotal"] = materials.total_amount
 	data["materialsmax"] = materials.max_amount
 	data["categories"] = categories
 	data["designs"] = list()
 	data["active"] = busy
+=======
+	materials.retrieve_all()
+
+/obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
+	if (busy)
+		to_chat(user, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
+		return TRUE
+
+	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
+		updateUsrDialog()
+		return TRUE
+
+	if(default_deconstruction_crowbar(O))
+		return TRUE
+
+	if(panel_open && is_wire_tool(O))
+		wires.interact(user)
+		return TRUE
+
+	if(user.a_intent == INTENT_HARM) //so we can hit the machine
+		return ..()
+
+	if(machine_stat)
+		return TRUE
+
+	if(istype(O, /obj/item/disk/design_disk))
+		user.visible_message("<span class='notice'>[user] begins to load \the [O] in \the [src]...</span>",
+			"<span class='notice'>You begin to load a design from \the [O]...</span>",
+			"<span class='hear'>You hear the chatter of a floppy drive.</span>")
+		busy = TRUE
+		var/obj/item/disk/design_disk/D = O
+		if(do_after(user, 14.4, target = src))
+			for(var/B in D.blueprints)
+				if(B)
+					stored_research.add_design(B)
+		busy = FALSE
+		return TRUE
+
+	return ..()
+
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = mat_id

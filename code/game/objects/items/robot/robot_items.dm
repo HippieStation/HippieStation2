@@ -30,7 +30,7 @@
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
-	log_combat(user, M, "stunned", src, "(Combat mode: [user.combat_mode ? "On" : "Off"])")
+	log_combat(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
 /obj/item/borg/cyborghug
 	name = "hugging module"
@@ -64,16 +64,20 @@
 		if(3)
 			to_chat(user, "<span class='warningplain'>ERROR: ARM ACTUATORS OVERLOADED.</span>")
 
-/obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user, params)
+/obj/item/borg/cyborghug/attack(mob/living/M, mob/living/silicon/robot/user)
 	if(M == user)
 		return
 	switch(mode)
 		if(0)
 			if(M.health >= 0)
 				if(isanimal(M))
+<<<<<<< HEAD
 					var/list/modifiers = params2list(params)
 					if (!user.combat_mode && !LAZYACCESS(modifiers, RIGHT_CLICK))
 						M.attack_hand(user, modifiers) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
+=======
+					M.attack_hand(user) //This enables borgs to get the floating heart icon and mob emote from simple_animal's that have petbonus == true.
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 					return
 				if(user.zone_selected == BODY_ZONE_HEAD)
 					user.visible_message(span_notice("[user] playfully boops [M] on the head!"), \
@@ -929,11 +933,20 @@
 		arm.pixel_y = arm.pixel_y - 5
 	. += arm
 
+<<<<<<< HEAD
 /// Secondary attack spills the content of the beaker.
 /obj/item/borg/apparatus/beaker/pre_attack_secondary(atom/target, mob/living/silicon/robot/user)
 	var/obj/item/reagent_containers/stored_beaker = stored
 	stored_beaker.SplashReagents(drop_location(user))
 	loc.visible_message(span_notice("[user] spills the contents of [stored_beaker] all over the ground."))
+=======
+/obj/item/borg/apparatus/beaker/attack_self(mob/living/silicon/robot/user)
+	if(stored && !user.client?.keys_held["Alt"] && user.a_intent != "help")
+		var/obj/item/reagent_containers/C = stored
+		C.SplashReagents(get_turf(user))
+		loc.visible_message("<span class='notice'>[user] spills the contents of the [C] all over the floor.</span>")
+		return
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	. = ..()
 
 /obj/item/borg/apparatus/beaker/extra

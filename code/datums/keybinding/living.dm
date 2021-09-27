@@ -74,6 +74,7 @@
 	var/mob/living/living_mob = user.mob
 	living_mob.toggle_resting()
 	return TRUE
+<<<<<<< HEAD
 
 /datum/keybinding/living/toggle_combat_mode
 	hotkey_keys = list("F", "4")
@@ -117,3 +118,5 @@
 		return
 	var/mob/living/user_mob = user.mob
 	user_mob.set_combat_mode(FALSE, silent = FALSE)
+=======
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))

@@ -63,6 +63,12 @@
 /obj/item/reagent_containers/food/drinks/bottle/attack_secondary(atom/target, mob/living/user, params)
 
 	if(!target)
+<<<<<<< HEAD
+=======
+		return
+
+	if(user.a_intent != INTENT_HARM || !isGlass)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return ..()
 
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))

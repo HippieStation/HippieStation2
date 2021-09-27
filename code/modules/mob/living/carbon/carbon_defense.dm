@@ -144,7 +144,11 @@
 	return //so we don't call the carbon's attack_hand().
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
+<<<<<<< HEAD
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user, list/modifiers)
+=======
+/mob/living/carbon/attack_hand(mob/living/carbon/human/user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
@@ -160,8 +164,8 @@
 
 	for(var/datum/surgery/S in surgeries)
 		if(body_position == LYING_DOWN || !S.lying_required)
-			if(!user.combat_mode)
-				if(S.next_step(user, modifiers))
+			if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
+				if(S.next_step(user, user.a_intent))
 					return TRUE
 
 	for(var/i in all_wounds)
@@ -169,10 +173,20 @@
 		if(W.try_handling(user))
 			return TRUE
 
+<<<<<<< HEAD
 	return FALSE
 
 
 /mob/living/carbon/attack_paw(mob/living/carbon/human/user, list/modifiers)
+=======
+	if (user.apply_martial_art(src))
+		return TRUE
+
+	return FALSE
+
+
+/mob/living/carbon/attack_paw(mob/living/carbon/human/M)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 	if(try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
 		for(var/thing in diseases)
@@ -185,8 +199,13 @@
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
+<<<<<<< HEAD
 	if(!user.combat_mode)
 		help_shake_act(user)
+=======
+	if(M.a_intent == INTENT_HELP)
+		help_shake_act(M)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return FALSE
 
 	if(..()) //successful monkey bite.
@@ -246,6 +265,19 @@
  * or another carbon.
 */
 /mob/living/carbon/proc/disarm(mob/living/carbon/target)
+<<<<<<< HEAD
+=======
+	if(zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
+		if(target_on_help_and_unarmed || HAS_TRAIT(target, TRAIT_RESTRAINED))
+			do_slap_animation(target)
+			playsound(target.loc, 'sound/weapons/slap.ogg', 50, TRUE, -1)
+			visible_message("<span class='danger'>[src] slaps [target] in the face!</span>",
+				"<span class='notice'>You slap [target] in the face! </span>",\
+			"You hear a slap.")
+			target.dna?.species?.stop_wagging_tail(target)
+			return
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	do_attack_animation(target, ATTACK_EFFECT_DISARM)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	if (ishuman(target))
@@ -438,11 +470,19 @@
 
 	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
 		SEND_SIGNAL(src, COMSIG_CARBON_HEADPAT, M)
+<<<<<<< HEAD
 		M.visible_message(span_notice("[M] gives [src] a pat on the head to make [p_them()] feel better!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, span_notice("You give [src] a pat on the head to make [p_them()] feel better!"))
 		to_chat(src, span_notice("[M] gives you a pat on the head to make you feel better! "))
 
+=======
+		M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
+					null, "<span class='hear'>You hear a soft patter.</span>", DEFAULT_MESSAGE_RANGE, list(M, src))
+		to_chat(M, "<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
+		to_chat(src, "<span class='notice'>[M] gives you a pat on the head to make you feel better! </span>")
+		
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(M, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
 
@@ -484,7 +524,7 @@
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
 			else if (hugger_mood.sanity >= SANITY_DISTURBED)
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
-
+		
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(M, span_warning("[src] looks visibly upset as you hug [p_them()]."))
 

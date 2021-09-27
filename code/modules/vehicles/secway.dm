@@ -28,6 +28,7 @@
 	smoke.set_up(0, src)
 	smoke.start()
 
+<<<<<<< HEAD
 /obj/vehicle/ridden/secway/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(.)
@@ -49,6 +50,16 @@
 	// ignore the occupants because they're presumably too distracted to notice the guy stuffing fruit into their vehicle's exhaust. do segways have exhausts? they do now!
 	user.visible_message(span_warning("[user] begins stuffing [W] into [src]'s tailpipe."), span_warning("You begin stuffing [W] into [src]'s tailpipe..."), ignored_mobs = occupants)
 	if(!do_after(user, 3 SECONDS, src))
+=======
+/obj/vehicle/ridden/secway/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
+		if(obj_integrity < max_integrity)
+			if(W.use_tool(src, user, 0, volume = 50, amount = 1))
+				user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
+				obj_integrity += min(10, max_integrity-obj_integrity)
+				if(obj_integrity == max_integrity)
+					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return TRUE
 	if(user.transferItemToLoc(W, src))
 		user.visible_message(span_warning("[user] stuffs [W] into [src]'s tailpipe."), span_warning("You stuff [W] into [src]'s tailpipe."), ignored_mobs = occupants)

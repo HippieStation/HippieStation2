@@ -309,7 +309,11 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/xenobio/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
+<<<<<<< HEAD
 	if(user.combat_mode)
+=======
+	if(M.a_intent != "help")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return
 	toggle_open()
 

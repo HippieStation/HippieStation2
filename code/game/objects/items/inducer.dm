@@ -33,8 +33,13 @@
 	if(cell && !(. & EMP_PROTECT_CONTENTS))
 		cell.emp_act(severity)
 
+<<<<<<< HEAD
 /obj/item/inducer/attack_atom(obj/O, mob/living/carbon/user, params)
 	if(user.combat_mode)
+=======
+/obj/item/inducer/attack_obj(obj/O, mob/living/carbon/user)
+	if(user.a_intent == INTENT_HARM)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return ..()
 
 	if(cantbeused(user))
@@ -135,8 +140,8 @@
 	recharging = FALSE
 
 
-/obj/item/inducer/attack(mob/M, mob/living/user)
-	if(user.combat_mode)
+/obj/item/inducer/attack(mob/M, mob/user)
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 	if(cantbeused(user))

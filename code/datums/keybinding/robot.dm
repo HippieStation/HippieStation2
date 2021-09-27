@@ -50,6 +50,24 @@
 	R.toggle_module(3)
 	return TRUE
 
+<<<<<<< HEAD
+=======
+/datum/keybinding/robot/intent_cycle
+	hotkey_keys = list("4")
+	name = "cycle_intent"
+	full_name = "Cycle intent left"
+	description = "Cycles the intent left"
+	keybind_signal = COMSIG_KB_SILICON_CYCLEINTENT_DOWN
+
+/datum/keybinding/robot/intent_cycle/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/silicon/robot/R = user.mob
+	R.a_intent_change(INTENT_HOTKEY_LEFT)
+	return TRUE
+
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 /datum/keybinding/robot/unequip_module
 	hotkey_keys = list("Q")
 	name = "unequip_module"

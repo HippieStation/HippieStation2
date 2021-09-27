@@ -273,7 +273,7 @@
 /mob/living/simple_animal/slime/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return
 
-/mob/living/simple_animal/slime/attack_ui(slot, params)
+/mob/living/simple_animal/slime/attack_ui(slot)
 	return
 
 /mob/living/simple_animal/slime/attack_slime(mob/living/simple_animal/slime/M)
@@ -313,7 +313,11 @@
 		return
 	discipline_slime(user)
 
+<<<<<<< HEAD
 /mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/user, list/modifiers)
+=======
+/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	if(buckled)
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == user)
@@ -343,9 +347,15 @@
 				discipline_slime(user)
 	else
 		if(stat == DEAD && surgeries.len)
+<<<<<<< HEAD
 			if(!user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
 				for(var/datum/surgery/S in surgeries)
 					if(S.next_step(user, modifiers))
+=======
+			if(M.a_intent == INTENT_HELP || M.a_intent == INTENT_DISARM)
+				for(var/datum/surgery/S in surgeries)
+					if(S.next_step(M,M.a_intent))
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 						return 1
 		if(..()) //successful attack
 			attacked += 10
@@ -358,10 +368,14 @@
 
 /mob/living/simple_animal/slime/attackby(obj/item/W, mob/living/user, params)
 	if(stat == DEAD && surgeries.len)
+<<<<<<< HEAD
 		var/list/modifiers = params2list(params)
 		if(!user.combat_mode || (LAZYACCESS(modifiers, RIGHT_CLICK)))
+=======
+		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, modifiers))
+				if(S.next_step(user,user.a_intent))
 					return 1
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		add_friendship(user, 1)

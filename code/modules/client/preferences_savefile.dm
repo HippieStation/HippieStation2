@@ -2,10 +2,17 @@
 #define SAVEFILE_VERSION_MIN 32
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
+<<<<<<< HEAD
 // You do not need to raise this if you are adding new values that have sane defaults.
 // Only raise this value when changing the meaning/format/name/layout of an existing value
 // where you would want the updater procs below to run
 #define SAVEFILE_VERSION_MAX 41
+=======
+//	You do not need to raise this if you are adding new values that have sane defaults.
+//	Only raise this value when changing the meaning/format/name/layout of an existing value
+//	where you would want the updater procs below to run
+#define SAVEFILE_VERSION_MAX	38
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -87,6 +94,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if (!found_block_movement)
 			LAZYADD(key_bindings["Ctrl"], "block_movement")
 
+<<<<<<< HEAD
 	if (current_version < 39)
 		LAZYADD(key_bindings["F"], "toggle_combat_mode")
 		LAZYADD(key_bindings["4"], "toggle_combat_mode")
@@ -99,6 +107,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/update_character(current_version, savefile/savefile)
 	if (current_version < 41)
 		migrate_character_to_tgui_prefs_menu()
+=======
+/datum/preferences/proc/update_character(current_version, savefile/S)
+	return
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()

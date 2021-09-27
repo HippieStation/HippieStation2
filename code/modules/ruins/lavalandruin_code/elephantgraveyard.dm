@@ -84,7 +84,7 @@
 	reagents.expose(user, TOUCH, 20) //Covers target in 20u of oil.
 	to_chat(user, span_notice("You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water."))
 
-/obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, params)
+/obj/structure/sink/oil_well/attackby(obj/item/O, mob/user, params)
 	flick("puddle-oil-splash",src)
 	if(O.tool_behaviour == TOOL_SHOVEL && !(flags_1&NODECONSTRUCT_1)) //attempt to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
@@ -100,8 +100,13 @@
 				return TRUE
 			to_chat(user, span_notice("\The [RG] is full."))
 			return FALSE
+<<<<<<< HEAD
 	if(!user.combat_mode)
 		to_chat(user, span_notice("You won't have any luck getting \the [O] out if you drop it in the oil."))
+=======
+	if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='notice'>You won't have any luck getting \the [O] out if you drop it in the oil.</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return 1
 	else
 		return ..()
@@ -162,7 +167,7 @@
 		to_chat(user, span_notice("The grave has already been dug up."))
 
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
-	if(!user.combat_mode) //checks to attempt to dig the grave, must be done with combat mode off only.
+	if(user.a_intent == INTENT_HELP) //checks to attempt to dig the grave, must be done on help intent only.
 		if(!opened)
 			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, span_notice("You start start to dig open \the [src]  with \the [S]..."))
@@ -185,7 +190,7 @@
 			to_chat(user, span_notice("The grave has already been dug up."))
 			return 1
 
-	else if((user.combat_mode) && opened) //checks to attempt to remove the grave entirely.
+	else if((user.a_intent != INTENT_HELP) && opened) //checks to attempt to remove the grave entirely.
 		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 			to_chat(user, span_notice("You start to remove \the [src]  with \the [S]."))
 			if (do_after(user,15, target = src))

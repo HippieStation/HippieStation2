@@ -124,15 +124,21 @@
 		. += "[initial(icon_state)]_closed"
 		return
 
-/obj/structure/displaycase/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/displaycase/attackby(obj/item/W, mob/user, params)
 	if(W.GetID() && !broken && openable)
 		if(allowed(user))
 			to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
 			toggle_lock(user)
 		else
+<<<<<<< HEAD
 			to_chat(user, span_alert("Access denied."))
 	else if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
 		if(atom_integrity < max_integrity)
+=======
+			to_chat(user,  "<span class='alert'>Access denied.</span>")
+	else if(W.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP && !broken)
+		if(obj_integrity < max_integrity)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 			if(!W.tool_start_check(user, amount=5))
 				return
 
@@ -188,7 +194,11 @@
 /obj/structure/displaycase/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
+<<<<<<< HEAD
 /obj/structure/displaycase/attack_hand(mob/living/user, list/modifiers)
+=======
+/obj/structure/displaycase/attack_hand(mob/user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	. = ..()
 	if(.)
 		return
@@ -203,7 +213,7 @@
 	    //prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
-		if (!user.combat_mode)
+		if (user.a_intent == INTENT_HELP)
 			if(!user.is_blind())
 				user.examinate(src)
 			return
@@ -304,11 +314,11 @@
 	GLOB.trophy_cases -= src
 	return ..()
 
-/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/displaycase/trophy/attackby(obj/item/W, mob/user, params)
 
 	if(!user.Adjacent(src)) //no TK museology
 		return
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(W.tool_behaviour == TOOL_WELDER && !broken)
 		return ..()
@@ -550,7 +560,7 @@
 
 /obj/structure/displaycase/forsale/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(open && !user.combat_mode)
+	if(open && user.a_intent == INTENT_HELP )
 		if(anchored)
 			to_chat(user, span_notice("You start unsecuring [src]..."))
 		else
@@ -563,9 +573,15 @@
 			else
 				to_chat(user, span_notice("You secure [src]."))
 			set_anchored(!anchored)
+<<<<<<< HEAD
 			return TRUE
 	else if(!open && !user.combat_mode)
 		to_chat(user, span_notice("[src] must be open to move it."))
+=======
+			return
+	else if(!open && user.a_intent == INTENT_HELP)
+		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return
 
 /obj/structure/displaycase/forsale/emag_act(mob/user)

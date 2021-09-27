@@ -90,7 +90,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
+<<<<<<< HEAD
 	if(!lit || !cig || user.combat_mode)
+=======
+	if(lit && cig && user.a_intent == INTENT_HELP)
+		if(cig.lit)
+			to_chat(user, "<span class='warning'>[cig] is already lit!</span>")
+		if(M == user)
+			cig.attackby(src, user)
+		else
+			cig.light("<span class='notice'>[user] holds [src] out for [M], and lights [cig].</span>")
+	else
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		..()
 		return
 
@@ -329,7 +340,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		light(span_notice("[user] lights [src] with [M]'s burning body. What a cold-blooded badass."))
 		return
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
+<<<<<<< HEAD
 	if(!lit || !cig || user.combat_mode)
+=======
+	if(lit && cig && user.a_intent == INTENT_HELP)
+		if(cig.lit)
+			to_chat(user, "<span class='warning'>The [cig.name] is already lit!</span>")
+		if(M == user)
+			cig.attackby(src, user)
+		else
+			cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights [M.p_their()] [cig.name].</span>")
+	else
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return ..()
 
 	if(cig.lit)
@@ -800,7 +822,21 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
 		log_game("[key_name(user)] set [key_name(M)] on fire with [src] at [AREACOORD(user)]")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
+<<<<<<< HEAD
 	if(!lit || !cig || user.combat_mode)
+=======
+	if(lit && cig && user.a_intent == INTENT_HELP)
+		if(cig.lit)
+			to_chat(user, "<span class='warning'>The [cig.name] is already lit!</span>")
+		if(M == user)
+			cig.attackby(src, user)
+		else
+			if(fancy)
+				cig.light("<span class='rose'>[user] whips the [name] out and holds it for [M]. [user.p_their(TRUE)] arm is as steady as the unflickering flame [user.p_they()] light[user.p_s()] \the [cig] with.</span>")
+			else
+				cig.light("<span class='notice'>[user] holds the [name] out for [M], and lights [M.p_their()] [cig.name].</span>")
+	else
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		..()
 		return
 

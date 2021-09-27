@@ -481,7 +481,36 @@
 	if(damagetype_healer == "all" && treat_me_for.len)
 		return TRUE
 
+<<<<<<< HEAD
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+=======
+/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H)
+	if(DOING_INTERACTION_WITH_TARGET(H, src))
+		to_chat(H, "<span class='warning'>You're already interacting with [src].</span>")
+		return
+
+	if(H.a_intent == INTENT_DISARM && mode != BOT_TIPPED)
+		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='warning'>You begin tipping over [src]...</span>")
+
+		if(world.time > last_tipping_action_voice + 15 SECONDS)
+			last_tipping_action_voice = world.time // message for tipping happens when we start interacting, message for righting comes after finishing
+			var/list/messagevoice = list("Hey, wait..." = 'sound/voice/medbot/hey_wait.ogg',"Please don't..." = 'sound/voice/medbot/please_dont.ogg',"I trusted you..." = 'sound/voice/medbot/i_trusted_you.ogg', "Nooo..." = 'sound/voice/medbot/nooo.ogg', "Oh fuck-" = 'sound/voice/medbot/oh_fuck.ogg')
+			var/message = pick(messagevoice)
+			speak(message)
+			playsound(src, messagevoice[message], 70, FALSE)
+
+		if(do_after(H, 3 SECONDS, target=src))
+			tip_over(H)
+
+	else if(H.a_intent == INTENT_HELP && mode == BOT_TIPPED)
+		H.visible_message("<span class='notice'>[H] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
+		if(do_after(H, 3 SECONDS, target=src))
+			set_right(H)
+	else
+		..()
+
+/mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A) && !tending)

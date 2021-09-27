@@ -25,8 +25,15 @@
 /// probability that monkey will get recruited when friend is attacked
 #define MONKEY_RECRUIT_PROB 25
 
+<<<<<<< HEAD
 /// probability for the monkey to aggro when attacked
 #define MONKEY_RETALIATE_PROB 85
+=======
+/// probability for the monkey to aggro when attacked with harm intent
+#define MONKEY_RETALIATE_HARM_PROB 			95
+/// probability for the monkey to aggro when attacked with disarm intent
+#define MONKEY_RETALIATE_DISARM_PROB 		20
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 /// amount of aggro to add to an enemy when they attack user
 #define MONKEY_HATRED_AMOUNT 4

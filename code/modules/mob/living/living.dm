@@ -126,12 +126,17 @@
 				mob_swap = TRUE
 		else
 			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
-			if(M.pulledby == src && !too_strong)
+			if(M.pulledby == src && a_intent == INTENT_GRAB && !too_strong)
 				mob_swap = TRUE
 			else if(
 				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))&&\
+<<<<<<< HEAD
 				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || !their_combat_mode) &&\
 				(HAS_TRAIT(src, TRAIT_RESTRAINED) || !combat_mode)
+=======
+				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || M.a_intent == INTENT_HELP) &&\
+				(HAS_TRAIT(src, TRAIT_RESTRAINED) || a_intent == INTENT_HELP)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 			)
 				mob_swap = TRUE
 		if(mob_swap)
@@ -172,6 +177,7 @@
 		if(HAS_TRAIT(L, TRAIT_PUSHIMMUNE))
 			return TRUE
 	//If they're a human, and they're not in help intent, block pushing
+<<<<<<< HEAD
 	if(ishuman(M))
 		var/mob/living/carbon/human/human = M
 		if(human.combat_mode)
@@ -181,6 +187,10 @@
 		var/mob/living/silicon/robot/borg = M
 		if(borg.combat_mode && borg.stat != DEAD)
 			return TRUE
+=======
+	if(ishuman(M) && (M.a_intent != INTENT_HELP))
+		return TRUE
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
@@ -323,7 +333,6 @@
 			M.LAssailant = WEAKREF(usr)
 		if(isliving(M))
 			var/mob/living/L = M
-
 			SEND_SIGNAL(M, COMSIG_LIVING_GET_PULLED, src)
 			//Share diseases that are spread by touch
 			for(var/thing in diseases)
@@ -386,7 +395,7 @@
 
 	if(istype(AM) && Adjacent(AM))
 		start_pulling(AM)
-	else if(!combat_mode) //Don;'t cancel pulls if misclicking in combat mode.
+	else
 		stop_pulling()
 
 /mob/living/stop_pulling()
@@ -2120,10 +2129,15 @@
  * It is also used to process martial art attacks by nonhumans, even against humans
  * Human vs human attacks are handled in species code right now.
  */
+<<<<<<< HEAD
 /mob/living/proc/apply_martial_art(mob/living/target, modifiers, is_grab = FALSE)
+=======
+/mob/living/proc/apply_martial_art(mob/living/target)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	if(HAS_TRAIT(target, TRAIT_MARTIAL_ARTS_IMMUNE))
 		return MARTIAL_ATTACK_INVALID
 	var/datum/martial_art/style = mind?.martial_art
+<<<<<<< HEAD
 	if (!style)
 		return MARTIAL_ATTACK_INVALID
 	// will return boolean below since it's not invalid
@@ -2153,3 +2167,19 @@
 		exp_list[mind.assigned_role.title] = minutes
 
 	return exp_list
+=======
+	var/attack_result = FALSE
+	if (style)
+		switch (a_intent)
+			if (INTENT_GRAB)
+				attack_result = style.grab_act(src, target)
+			if (INTENT_HARM)
+				if (HAS_TRAIT(src, TRAIT_PACIFISM))
+					return FALSE
+				attack_result = style.harm_act(src, target)
+			if (INTENT_DISARM)
+				attack_result = style.disarm_act(src, target)
+			if (INTENT_HELP)
+				attack_result = style.help_act(src, target)
+	return attack_result
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))

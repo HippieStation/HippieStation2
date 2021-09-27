@@ -37,7 +37,7 @@
 	. = ..()
 	cargo_holder = null
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(mob/living/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(mob/source, atom/target, params)
 	if(!action_checks(target))
 		return
 	if(!cargo_holder)
@@ -91,10 +91,7 @@
 		var/mob/living/M = target
 		if(M.stat == DEAD)
 			return
-
-		var/list/modifiers = params2list(params)
-
-		if(!source.combat_mode)
+		if(source.a_intent == INTENT_HELP)
 			step_away(M,chassis)
 			if(killer_clamp)
 				target.visible_message(span_danger("[chassis] tosses [target] like a piece of paper!"), \
@@ -104,7 +101,11 @@
 				chassis.visible_message(span_notice("[chassis] pushes [target] out of the way."), \
 				span_notice("[chassis] pushes you aside."))
 			return ..()
+<<<<<<< HEAD
 		else if(LAZYACCESS(modifiers, RIGHT_CLICK) && iscarbon(M))//meme clamp here
+=======
+		else if(source.a_intent == INTENT_DISARM && iscarbon(M))//meme clamp here
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 			if(!killer_clamp)
 				to_chat(source, span_notice("You longingly wish to tear [M]'s arms off."))
 				return
@@ -122,9 +123,15 @@
 				to_chat(source, span_notice("[M]'s arms are already torn off, you must find a challenger worthy of the kill clamp!"))
 				return
 			playsound(src, get_dismember_sound(), 80, TRUE)
+<<<<<<< HEAD
 			target.visible_message(span_danger("[chassis] rips [target]'s arms off!"), \
 						   span_userdanger("[chassis] rips your arms off!"))
 			log_combat(source, M, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
+=======
+			target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off!</span>", \
+						   "<span class='userdanger'>[chassis] rips your arms off!</span>")
+			log_combat(source, M, "removed both arms with a real clamp,", "[name]", "(INTENT: [uppertext(source.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 			return ..()
 
 		M.take_overall_damage(clamp_damage)
@@ -132,10 +139,17 @@
 			return
 		M.adjustOxyLoss(round(clamp_damage/2))
 		M.updatehealth()
+<<<<<<< HEAD
 		target.visible_message(span_danger("[chassis] squeezes [target]!"), \
 							span_userdanger("[chassis] squeezes you!"),\
 							span_hear("You hear something crack."))
 		log_combat(source, M, "attacked", "[name]", "(Combat mode: [source.combat_mode ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
+=======
+		target.visible_message("<span class='danger'>[chassis] squeezes [target]!</span>", \
+							"<span class='userdanger'>[chassis] squeezes you!</span>",\
+							"<span class='hear'>You hear something crack.</span>")
+		log_combat(source, M, "attacked", "[name]", "(INTENT: [uppertext(source.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	return ..()
 
 

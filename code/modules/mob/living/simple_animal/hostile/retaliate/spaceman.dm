@@ -13,7 +13,7 @@
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	combat_mode = TRUE
+	a_intent = INTENT_HARM
 	maxHealth = 100
 	health = 100
 	speed = 0
@@ -50,9 +50,13 @@
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	faction = list("nanotrasenprivate")
+<<<<<<< HEAD
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_HUMANOID
 	combat_mode = TRUE
+=======
+	a_intent = INTENT_HARM
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5

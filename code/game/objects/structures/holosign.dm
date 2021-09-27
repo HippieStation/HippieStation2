@@ -174,8 +174,13 @@
 		return FALSE
 	return TRUE
 
+<<<<<<< HEAD
 /obj/structure/holosign/barrier/medical/attack_hand(mob/living/user, list/modifiers)
 	if(!user.combat_mode && CanPass(user, get_dir(src, user)))
+=======
+/obj/structure/holosign/barrier/medical/attack_hand(mob/living/user)
+	if(CanPass(user) && user.a_intent == INTENT_HELP)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		force_allaccess = !force_allaccess
 		to_chat(user, span_warning("You [force_allaccess ? "deactivate" : "activate"] the biometric scanners.")) //warning spans because you can make the station sick!
 	else

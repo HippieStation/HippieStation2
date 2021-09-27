@@ -12,8 +12,13 @@
 	status_flags = CANSTUN|CANKNOCKDOWN|CANPUSH
 	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = list("neutral")
+<<<<<<< HEAD
 	combat_mode = TRUE
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+=======
+	a_intent = INTENT_HARM
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	minbodytemp = 0
 	move_to_delay = 10
 	health = 125
@@ -126,7 +131,11 @@
 	. = ..()
 	if(.)
 		return
+<<<<<<< HEAD
 	if(!user.combat_mode)
+=======
+	if(M.a_intent == INTENT_HELP)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		toggle_mode()
 		switch(mode)
 			if(MINEDRONE_COLLECT)

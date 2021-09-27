@@ -45,10 +45,16 @@
 			I.forceMove(loc)
 	qdel(src)
 
+<<<<<<< HEAD
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/living/user, params)
 	var/list/modifiers = params2list(params)
 	if(P.tool_behaviour == TOOL_WRENCH && LAZYACCESS(modifiers, RIGHT_CLICK))
 		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
+=======
+/obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
+	if(P.tool_behaviour == TOOL_WRENCH && user.a_intent != INTENT_HELP)
+		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		if(P.use_tool(src, user, 20, volume=50))
 			to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
 			set_anchored(!anchored)
@@ -60,8 +66,13 @@
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
+<<<<<<< HEAD
 	else if(!user.combat_mode)
 		to_chat(user, span_warning("You can't put [P] in [src]!"))
+=======
+	else if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='warning'>You can't put [P] in [src]!</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	else
 		return ..()
 

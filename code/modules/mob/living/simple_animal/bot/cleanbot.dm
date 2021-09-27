@@ -164,7 +164,7 @@
 		INVOKE_ASYNC(weapon, /obj/item.proc/attack, C, src)
 		C.Knockdown(20)
 
-/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/living/user, params)
+/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
 	if(W.GetID())
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
@@ -175,9 +175,15 @@
 			if(open)
 				to_chat(user, span_warning("Please close the access panel before locking it."))
 			else
+<<<<<<< HEAD
 				to_chat(user, span_notice("\The [src] doesn't seem to respect your authority."))
 	else if(istype(W, /obj/item/kitchen/knife) && !user.combat_mode)
 		to_chat(user, span_notice("You start attaching \the [W] to \the [src]..."))
+=======
+				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
+	else if(istype(W, /obj/item/kitchen/knife) && user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='notice'>You start attaching \the [W] to \the [src]...</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		if(do_after(user, 25, target = src))
 			deputize(W, user)
 	else

@@ -961,13 +961,17 @@
 		return ..()
 
 
-/obj/machinery/door/airlock/try_to_weld(obj/item/weldingtool/W, mob/living/user)
+/obj/machinery/door/airlock/try_to_weld(obj/item/weldingtool/W, mob/user)
 	if(!operating && density)
 		if(seal)
 			to_chat(user, span_warning("[src] is blocked by a seal!"))
 			return
+<<<<<<< HEAD
 
 		if(atom_integrity < max_integrity)
+=======
+		if(user.a_intent != INTENT_HELP)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 			if(!W.tool_start_check(user, amount=0))
 				return
 			user.visible_message(span_notice("[user] begins welding the airlock."), \
@@ -1240,7 +1244,7 @@
 	if(!density) //Already open
 		return ..()
 	if(locked || welded || seal) //Extremely generic, as aliens only understand the basics of how airlocks work.
-		if(user.combat_mode)
+		if(user.a_intent == INTENT_HARM)
 			return ..()
 		to_chat(user, span_warning("[src] refuses to budge!"))
 		return

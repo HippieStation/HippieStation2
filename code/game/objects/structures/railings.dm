@@ -38,8 +38,13 @@
 	..()
 	add_fingerprint(user)
 
+<<<<<<< HEAD
 	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		if(atom_integrity < max_integrity)
+=======
+	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
+		if(obj_integrity < max_integrity)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 			if(!I.tool_start_check(user, amount=0))
 				return
 

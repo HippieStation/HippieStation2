@@ -57,7 +57,7 @@
 	response_harm_continuous = "swats"
 	response_harm_simple = "swat"
 	stop_automated_movement = 1
-	combat_mode = TRUE //parrots now start "aggressive" since only player parrots will nuzzle.
+	a_intent = INTENT_HARM //parrots now start "aggressive" since only player parrots will nuzzle.
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
 	attack_vis_effect = ATTACK_EFFECT_BITE
@@ -157,7 +157,7 @@
 	. = ..()
 	. += ""
 	. += "Held Item: [held_item]"
-	. += "Combat mode: [combat_mode ? "On" : "Off"]"
+	. += "Mode: [a_intent]"
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
@@ -288,7 +288,11 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	..()
 	if(client)
 		return
+<<<<<<< HEAD
 	if(!stat && user.combat_mode)
+=======
+	if(!stat && M.a_intent == INTENT_HARM)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 		icon_state = icon_living //It is going to be flying regardless of whether it flees or attacks
 
@@ -303,7 +307,11 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		else
 			parrot_state |= PARROT_FLEE //Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
+<<<<<<< HEAD
 	if(stat != DEAD && !user.combat_mode)
+=======
+	if(stat != DEAD && M.a_intent == INTENT_HELP)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		handle_automated_speech(1) //assured speak/emote
 	return
 
@@ -573,7 +581,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		var/mob/living/L = parrot_interest
 		if(melee_damage_upper == 0)
 			melee_damage_upper = parrot_damage_upper
-			set_combat_mode(TRUE)
+			a_intent = INTENT_HARM
 
 		//If the mob is close enough to interact with
 		if(Adjacent(parrot_interest))
@@ -867,13 +875,18 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(stat || !client)
 		return
 
-	if(combat_mode)
+	if(a_intent != INTENT_HELP)
 		melee_damage_upper = 0
-		set_combat_mode(FALSE)
+		a_intent = INTENT_HELP
 	else
 		melee_damage_upper = parrot_damage_upper
+<<<<<<< HEAD
 		set_combat_mode(TRUE)
 	to_chat(src, span_notice("You will now [combat_mode ? "Harm" : "Help"] others."))
+=======
+		a_intent = INTENT_HARM
+	to_chat(src, "<span class='notice'>You will now [a_intent] others.</span>")
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	return
 
 /*

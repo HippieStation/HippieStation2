@@ -22,7 +22,7 @@
 	else
 		to_chat(user, span_warning("You need a crowbar to pry this open!"))
 
-/obj/structure/closet/crate/large/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/closet/crate/large/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_CROWBAR)
 		if(manifest)
 			tear_manifest(user)
@@ -41,8 +41,13 @@
 		qdel(src)
 
 	else
+<<<<<<< HEAD
 		if(user.combat_mode) //Only return  ..() if intent is harm, otherwise return 0 or just end it.
 			return ..() //Stops it from opening and turning invisible when items are used on it.
+=======
+		if(user.a_intent == INTENT_HARM)	//Only return  ..() if intent is harm, otherwise return 0 or just end it.
+			return ..()						//Stops it from opening and turning invisible when items are used on it.
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 		else
 			to_chat(user, span_warning("You need a crowbar to pry this open!"))

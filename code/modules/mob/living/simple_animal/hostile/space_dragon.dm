@@ -29,10 +29,16 @@
 /mob/living/simple_animal/hostile/space_dragon
 	name = "Space Dragon"
 	desc = "A vile, leviathan-esque creature that flies in the most unnatural way.  Looks slightly similar to a space carp."
+<<<<<<< HEAD
 	maxHealth = 320
 	health = 320
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0.5, OXY = 1)
 	combat_mode = TRUE
+=======
+	maxHealth = 400
+	health = 400
+	a_intent = INTENT_HARM
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	speed = 0
 	movement_type = FLYING
 	attack_verb_continuous = "chomps"

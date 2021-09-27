@@ -103,7 +103,11 @@
 		reagents.trans_to(our_beaker, our_beaker.reagents.maximum_volume)
 	..()
 
+<<<<<<< HEAD
 /obj/machinery/limbgrower/attackby(obj/item/user_item, mob/living/user, params)
+=======
+/obj/machinery/limbgrower/attackby(obj/item/O, mob/user, params)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	if (busy)
 		to_chat(user, "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>")
 		return
@@ -128,7 +132,7 @@
 	if(panel_open && default_deconstruction_crowbar(user_item))
 		return
 
-	if(user.combat_mode) //so we can hit the machine
+	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
 
 /obj/machinery/limbgrower/ui_act(action, list/params)

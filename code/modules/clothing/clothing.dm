@@ -122,8 +122,19 @@
 	else
 		qdel(src)
 
+<<<<<<< HEAD
 /obj/item/clothing/attack(mob/living/M, mob/living/user, params)
 	if(user.combat_mode || !ismoth(M))
+=======
+/obj/item/clothing/attack(mob/attacker, mob/user, def_zone)
+	if(user.a_intent != INTENT_HARM && ismoth(attacker))
+		if (isnull(moth_snack))
+			moth_snack = new
+			moth_snack.name = name
+			moth_snack.clothing = WEAKREF(src)
+		moth_snack.attack(attacker, user, def_zone)
+	else
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return ..()
 	if(isnull(moth_snack))
 		moth_snack = new

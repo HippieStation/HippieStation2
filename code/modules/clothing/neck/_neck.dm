@@ -57,6 +57,7 @@
 	user.visible_message(span_suicide("[user] puts \the [src] to [user.p_their()] chest! It looks like [user.p_they()] won't hear much!"))
 	return OXYLOSS
 
+<<<<<<< HEAD
 /obj/item/clothing/neck/stethoscope/attack(mob/living/M, mob/living/user)
 	if(!ishuman(M) || !isliving(user))
 		return ..()
@@ -85,6 +86,33 @@
 		diagnosis = "Fat load of good it does you though, since you can't hear"
 
 	to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. [diagnosis]."))
+=======
+/obj/item/clothing/neck/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
+	if(ishuman(M) && isliving(user))
+		if(user.a_intent == INTENT_HELP)
+			var/body_part = parse_zone(user.zone_selected)
+
+			var/heart_strength = "<span class='danger'>no</span>"
+			var/lung_strength = "<span class='danger'>no</span>"
+
+			var/obj/item/organ/heart/heart = M.getorganslot(ORGAN_SLOT_HEART)
+			var/obj/item/organ/lungs/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
+
+			if(!(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH))))
+				if(heart && istype(heart))
+					heart_strength = "<span class='danger'>an unstable</span>"
+					if(heart.beating)
+						heart_strength = "a healthy"
+				if(lungs && istype(lungs))
+					lung_strength = "<span class='danger'>strained</span>"
+					if(!(M.failed_last_breath || M.losebreath))
+						lung_strength = "healthy"
+
+			var/diagnosis = (body_part == BODY_ZONE_CHEST ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
+			user.visible_message("<span class='notice'>[user] places [src] against [M]'s [body_part] and listens attentively.</span>", "<span class='notice'>You place [src] against [M]'s [body_part]. [diagnosis]</span>")
+			return
+	return ..(M,user)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 
 ///////////
 //SCARVES//

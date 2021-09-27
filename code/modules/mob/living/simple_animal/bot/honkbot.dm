@@ -118,9 +118,15 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		target = H
 		mode = BOT_HUNT
 
+<<<<<<< HEAD
 /mob/living/simple_animal/bot/honkbot/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(user.combat_mode)
 		retaliate(user)
+=======
+/mob/living/simple_animal/bot/honkbot/attack_hand(mob/living/carbon/human/H)
+	if(H.a_intent == "harm")
+		retaliate(H)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		addtimer(CALLBACK(src, .proc/react_buzz), 5)
 	return ..()
 

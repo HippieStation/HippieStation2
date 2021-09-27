@@ -443,7 +443,7 @@
 	forceMove(defib)
 	defib.update_power()
 
-/obj/item/shockpaddles/attack(mob/M, mob/living/user, params)
+/obj/item/shockpaddles/attack(mob/M, mob/user)
 	if(busy)
 		return
 	defib?.update_power()
@@ -464,8 +464,12 @@
 			to_chat(user, span_warning("[src] are recharging!"))
 		return
 
+<<<<<<< HEAD
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+=======
+	if(user.a_intent == INTENT_DISARM)
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		do_disarm(M, user)
 		return
 
@@ -481,7 +485,7 @@
 		to_chat(user, span_warning("You need to target your patient's chest with [src]!"))
 		return
 
-	if(user.combat_mode)
+	if(user.a_intent == INTENT_HARM)
 		do_harm(H, user)
 		return
 

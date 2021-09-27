@@ -8,7 +8,12 @@
 	icon_state = "morph"
 	icon_living = "morph"
 	icon_dead = "morph_dead"
+<<<<<<< HEAD
 	combat_mode = TRUE
+=======
+	speed = 2
+	a_intent = INTENT_HARM
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	pass_flags = PASSTABLE

@@ -74,7 +74,7 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/smartfridge/attackby(obj/item/O, mob/living/user, params)
+/obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
 		cut_overlays()
 		if(panel_open)
@@ -134,9 +134,15 @@
 				to_chat(user, span_warning("There is nothing in [O] to put in [src]!"))
 				return FALSE
 
+<<<<<<< HEAD
 	if(!user.combat_mode)
 		to_chat(user, span_warning("\The [src] smartly refuses [O]."))
 		SStgui.update_uis(src)
+=======
+	if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='warning'>\The [src] smartly refuses [O].</span>")
+		updateUsrDialog()
+>>>>>>> parent of 707fc287b4 (Replaces intents with combat mode (#56601))
 		return FALSE
 	else
 		return ..()
